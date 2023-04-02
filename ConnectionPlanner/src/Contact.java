@@ -1,19 +1,27 @@
 import java.util.ArrayList;
+<<<<<<< HEAD
 import java.util.Arrays;
+=======
+>>>>>>> main
 
 public class Contact {
 
     private static int id;
     private String firstname;
     private String lastname;
+<<<<<<< HEAD
     private String group;
     private ArrayList<Connection> availableConnections; //Set? :thonk:
+=======
+    private ArrayList<ConnectionType> availableConnections;
+>>>>>>> main
     private ArrayList<ConnectionType> preferredConnections;
     private boolean speaksGerman;
     private boolean speaksEnglish;
     private String[] additionalLanguages;
     private String[] preferredLanguages;
 
+<<<<<<< HEAD
     public Contact(String firstname, String lastname, boolean speaksGerman, boolean speaksEnglish) {
         this.id++;
         this.firstname = firstname;
@@ -145,4 +153,7 @@ public class Contact {
                 ", preferredLanguages=" + Arrays.toString(preferredLanguages) +
                 '}';
     }
+=======
+
+>>>>>>> main
 }

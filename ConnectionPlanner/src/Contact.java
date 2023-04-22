@@ -8,7 +8,7 @@ public class Contact {
     private String lastname;
     private String group;
     private ArrayList<Connection> availableConnections; //Set? :thonk:
-    private ArrayList<ConnectionType> availableConnections;
+    private ArrayList<ConnectionType> preferredConnectionTypes;
     private ArrayList<ConnectionType> preferredConnections;
     private boolean speaksGerman;
     private boolean speaksEnglish;

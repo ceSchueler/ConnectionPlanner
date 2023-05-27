@@ -63,7 +63,7 @@ public class Dataentry extends JDialog {
             return;
         }
 
-        
+
         JOptionPane.showMessageDialog(this, "Placeholder for Code, which would actually do stuff!");
 
     }

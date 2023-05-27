@@ -1,48 +1,49 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Contact {
 
-    private static int id;
+    private static final AtomicInteger count = new AtomicInteger(0);
+    private final int id;
     private String firstname;
     private String lastname;
-    private String group;
+    private ArrayList<String> groups;
     private ArrayList<Connection> availableConnections; //Set? :thonk:
     private boolean speaksGerman;
     private boolean speaksEnglish;
-    private String[] additionalLanguages;
+    private String[] additionalLanguages; // remove?
     private String[] preferredLanguages;
 
     public Contact(String firstname, String lastname, boolean speaksGerman, boolean speaksEnglish) {
-        this.id++;
+        this.id = count.incrementAndGet();
         this.firstname = firstname;
         this.lastname = lastname;
         this.speaksGerman = speaksGerman;
         this.speaksEnglish = speaksEnglish;
-        this.group = "NO_GROUP";
     }
 
-    public Contact(String firstname, String lastname, boolean speaksGerman, boolean speaksEnglish, String group) {
-        this.id++;
+    public Contact(String firstname, String lastname, boolean speaksGerman, boolean speaksEnglish, ArrayList<String> groups) {
+        this.id = count.incrementAndGet();
         this.firstname = firstname;
         this.lastname = lastname;
         this.speaksGerman = speaksGerman;
         this.speaksEnglish = speaksEnglish;
-        this.group = group;
+        this.groups = groups;
     }
 
-    public Contact(String firstname, String lastname, boolean speaksGerman, boolean speaksEnglish, String group, ArrayList<Connection> availableConnections) {
-        this.id++;
+    public Contact(String firstname, String lastname, boolean speaksGerman, boolean speaksEnglish, ArrayList<String> groups, ArrayList<Connection> availableConnections) {
+        this.id = count.incrementAndGet();
         this.firstname = firstname;
         this.lastname = lastname;
         this.speaksGerman = speaksGerman;
         this.speaksEnglish = speaksEnglish;
-        this.group = group;
+        this.groups = groups;
         this.availableConnections = availableConnections;
     }
 
     public Contact(String firstname, String lastname, ArrayList<Connection> availableConnections, boolean speaksGerman, boolean speaksEnglish, String[] additionalLanguages, String[] preferredLanguages) {
-        this.id++;
+        this.id = count.incrementAndGet();
         this.firstname = firstname;
         this.lastname = lastname;
         this.speaksGerman = speaksGerman;
@@ -52,7 +53,7 @@ public class Contact {
         this.preferredLanguages = preferredLanguages;
     }
 
-    public static int getId() {
+    public int getId() {
         return id;
     }
 
@@ -72,12 +73,12 @@ public class Contact {
         this.lastname = lastname;
     }
 
-    public String getGroup() {
-        return group;
+    public ArrayList<String> getGroups() {
+        return groups;
     }
 
-    public void setGroup(String group) {
-        this.group = group;
+    public void setGroups(ArrayList<String> groups) {
+        this.groups = groups;
     }
 
     public ArrayList<Connection> getAvailableConnections() {
@@ -122,10 +123,10 @@ public class Contact {
 
     @Override
     public String toString() {
-        return "Contact{" +
+        return "Contact[" + getId() + "]{" +
                 "firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
-                ", group='" + group + '\'' +
+                ", groups=" + groups +
                 ", availableConnections=" + availableConnections +
                 ", speaksGerman=" + speaksGerman +
                 ", speaksEnglish=" + speaksEnglish +

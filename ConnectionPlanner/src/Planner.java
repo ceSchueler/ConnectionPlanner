@@ -1,24 +1,32 @@
-import ConnectionManagement.ConnectionType;
 import ConnectionManagement.ConnectionTypes;
 
+import javax.swing.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Planner {
     private static ArrayList<Contact> contacts = new ArrayList<Contact>();
-    private static ArrayList<Contact> blacklist = new ArrayList<Contact>();
+    private static ArrayList<Contact> previouslySelected = new ArrayList<Contact>();
+    private static ArrayList<Contact> excludedFromSelection = new ArrayList<Contact>();
+
     private static ArrayList<Contact> selection = new ArrayList<Contact>();
-    private static boolean isInit = true;
 
     public static void main(String[] args) {
         //Connection con1 = new Connection(n)
+        ArrayList<String> groups = new ArrayList<>();
+        groups.add("badgroup1");
+        groups.add("b");
+
         Contact c1 = new Contact("Me", "LastName", true, true);
         Contact c2 = new Contact("A", "A", false, true);
         Contact c3 = new Contact("B", "B", true, true);
+        Contact c4 = new Contact("firstname", "lastname", true, true, groups);
+        Contact c5 = new Contact("firstname", "lastname", true, true, groups);
+
 
         ConnectionTypes ct = ConnectionTypes.getInstance();
-        Connection con = new Connection(c1, ct.getConnectionTypeByName("Discord"), "someDiscordUser#1234");
+        Connection con = new Connection(c1, ct.getConnectionTypeByName("Discord"), "someUniqueDiscordUsernameOrMaybeIDActually");
         Connection con1 = new Connection(c1, ct.getConnectionTypeByName("Instagram"), "myNameOnInstagram");
         ArrayList<Connection> cons = new ArrayList<>();
         cons.add(con);
@@ -91,5 +99,41 @@ public class Planner {
             out += "\nService: " + con.getConnectionType().getName() + "\nMethod: " + method;
         }
         return out;
+    }
+
+    protected static void resetPool() {
+        previouslySelected.removeAll(previouslySelected);
+        selection.addAll(contacts);
+    }
+
+    protected void resetBlacklist() {
+        excludedFromSelection.removeAll(excludedFromSelection);
+    }
+
+    protected void addtoBlackList(ArrayList<Contact> b) {
+        for (Contact c : b) {
+            excludedFromSelection.add(c);
+        }
+    }
+
+    protected static void addtoBlackListByGroup(String groupname) {
+        int excludedContacts = 0;
+
+        for (Contact c : selection) {
+            if (c.getGroups() != null) {
+                for (String g : c.getGroups()) {
+                    if (g.equals(groupname)) {
+                        excludedFromSelection.add(c);
+                        excludedContacts++;
+                        break;
+                    }
+                }
+            }
+        }
+        if (excludedContacts > 0) {
+            System.out.println("Successfully removed " + excludedContacts + " Contact(s)");
+        } else {
+            System.out.println("No contacts removed from selection!");
+        }
     }
 }

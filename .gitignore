@@ -27,3 +27,7 @@ ConnectionPlanner/src/DATA/*
 
 #Exeptions to above rule
 !ConnectionPlanner/src/DATA/DataImporter.java
+
+ConnectionPlanner/.idea/
+
+ConnectionPlanner/out/*

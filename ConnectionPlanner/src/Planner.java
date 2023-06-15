@@ -27,23 +27,62 @@ public class Planner {
         contacts.add(c1);
         contacts.add(c2);
         contacts.add(c3);
-        while (blacklist.size() < contacts.size()) {
-            System.out.println("Contact selected: " + pickContactServiceAndConnectionMethod());
+        contacts.add(c4);
+        contacts.add(c5);
+
+        initVariables();
+
+        System.out.println("Use \"get\" to get random connection, \"reset\" to reset pool, \"bg\" to blacklist group and \"q\" to quit");
+        Scanner scn = new Scanner(System.in);
+        while (scn.hasNext()) {
+            String in = scn.next().toLowerCase();
+            switch (in.trim()) {
+                case "q":
+                    return;
+                case "bg":
+                    System.out.println("Enter Groupname");
+                    in = scn.next();
+                    addtoBlackListByGroup(in);
+                    in = "";
+                    break;
+                case "get":
+                    if (selection.size() > 1) {
+                        System.out.println("Contact selected: " + pickContactServiceAndConnectionMethod());
+                    } else {
+                        System.out.println("No more contacts in pool, reset pool.");
+                    }
+                    in = "";
+                    break;
+                case "reset":
+                    System.out.println("Resetting pool...");
+                    resetPool();
+                    in = "";
+                    break;
+                default:
+                    System.out.println("No command recognised!");
+                    in = "";
+                    break;
+            }
         }
+    }
+
+    private static void initVariables() {
+        selection = new ArrayList<>(contacts);
     }
 
     protected static String pickContactServiceAndConnectionMethod() {
         String out = "";
+        Contact c = new Contact("", "", false, false);
         Random r = new Random();
-        if (isInit) {
-            selection = new ArrayList<Contact>(contacts);
-            isInit = false;
+        selection.removeAll(excludedFromSelection);
+        selection.removeAll(previouslySelected);
+        if (selection.size() > 0) {
+            int sel = r.nextInt(selection.size());
+            previouslySelected.add(selection.get(sel));
+            c = selection.get(sel);
+            out = c.toString();
         }
-        selection.removeAll(blacklist);
-        int sel = r.nextInt(selection.size());
-        blacklist.add(selection.get(sel));
-        Contact c = selection.get(sel);
-        out = c.toString();
+
         if (c.getAvailableConnections() != null) {
             ArrayList<Connection> avcons = c.getAvailableConnections();
             Connection con = avcons.get(r.nextInt(avcons.size()));
